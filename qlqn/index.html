@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hệ thống Quản lý Quân nhân</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Icon sprite: dùng <use href="#i-name"> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></symbol>
+  <symbol id="i-profile" viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><circle cx="12" cy="12" r="2.5"/><path d="M7.5 18c.8-2 2.4-3 4.5-3s3.7 1 4.5 3"/></symbol>
+  <symbol id="i-org" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5"/><rect x="3" y="16" width="6" height="5"/><rect x="15" y="16" width="6" height="5"/><path d="M12 8v4M6 16v-4h12v4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><path d="M3 4h18v4H3zM5 8v12h14V8M10 12h4"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__toggle-row">
+      <button class="sidebar__toggle" id="sidebar-toggle" type="button"
+        aria-label="Thu gọn hoặc mở rộng thanh điều hướng" aria-controls="sidebar" title="Thu gọn hoặc mở rộng">☰</button>
+    </div>
+    <div class="sidebar__brand">
+      <div class="sidebar__logo"><svg class="icon icon--lg"><use href="#i-shield"/></svg></div>
+      <div class="sidebar__title">HỆ THỐNG QUẢN LÝ<br>QUÂN NHÂN</div>
+    </div>
+
+    <div class="sidebar__caption">ĐIỀU HƯỚNG</div>
+    <nav class="nav" id="main-nav" aria-label="Điều hướng chính">
+      <a class="nav__item" data-route="dashboard"><svg class="icon"><use href="#i-dashboard"/></svg><span>Tổng quan</span></a>
+      <a class="nav__item is-active" data-route="personnel"><svg class="icon"><use href="#i-profile"/></svg><span>Hồ sơ quân nhân</span></a>
+      <a class="nav__item" data-route="units"><svg class="icon"><use href="#i-org"/></svg><span>Đơn vị &amp; Biên chế</span></a>
+      <a class="nav__item" data-route="training"><svg class="icon"><use href="#i-target"/></svg><span>Huấn luyện</span></a>
+      <a class="nav__item" data-route="lookup"><svg class="icon"><use href="#i-search"/></svg><span>Tra cứu</span></a>
+      <a class="nav__item" data-route="reports"><svg class="icon"><use href="#i-chart"/></svg><span>Báo cáo</span></a>
+      <a class="nav__item" data-route="admin"><svg class="icon"><use href="#i-settings"/></svg><span>Quản trị hệ thống</span></a>
+    </nav>
+
+    <div class="sidebar__user">
+      <div class="avatar">NH</div>
+      <div>
+        <div class="sidebar__user-name">Nguyễn Hoàng Huy</div>
+        <div class="sidebar__user-role">QUÂN_LỰC · SĐ3</div>
+      </div>
+    </div>
+    <div class="sidebar__version">v2.4.1 · MẠNG LAN NỘI BỘ</div>
+  </aside>
+
+  <div class="main">
+
+    <!-- ============ TOPBAR ============ -->
+    <header class="topbar" id="topbar">
+      <h1 class="topbar__title" id="page-title">Hồ sơ quân nhân</h1>
+      <label class="search topbar__search">
+        <svg class="icon"><use href="#i-search"/></svg>
+        <input class="search__input" id="global-search" type="search" placeholder="Tìm kiếm quân nhân theo họ tên hoặc mã quân nhân...">
+      </label>
+      <div class="topbar__actions">
+        <button class="icon-btn" aria-label="Thông báo"><svg class="icon icon--lg"><use href="#i-bell"/></svg></button>
+        <span class="chip">SĐ3</span>
+        <div class="avatar">NH</div>
+      </div>
+    </header>
+
+    <!-- ============ BODY: ĐÚNG 2 CỘT ============ -->
+    <div class="content">
+
+      <!-- Cột 1: cây đơn vị (luôn hiện) -->
+      <section class="panel unit-panel" id="unit-panel" aria-label="Đơn vị">
+        <div class="panel__head">
+          <h2 class="panel__title">ĐƠN VỊ</h2>
+          <p class="panel__subtitle" id="unit-summary"></p>
+          <label class="search search--sm">
+            <svg class="icon"><use href="#i-search"/></svg>
+            <input class="search__input" id="unit-search" type="search" placeholder="Tìm đơn vị...">
+          </label>
+        </div>
+        <div class="unit-tree" id="unit-tree" role="tree"></div>
+      </section>
+
+      <!-- Cột 2: workspace đơn, chuyển qua lại giữa 2 view -->
+      <section class="panel workspace" id="workspace">
+
+        <!-- VIEW 1: danh sách -->
+        <div class="view" id="view-list">
+          <div class="view__header">
+            <div>
+              <h2 class="view__title" id="list-title"></h2>
+              <p class="view__meta" id="list-count"></p>
+            </div>
+            <button class="btn btn--primary view__action" id="btn-add"><svg class="icon"><use href="#i-plus"/></svg>Thêm quân nhân</button>
+          </div>
+          <div class="toolbar">
+            <label class="search search--sm toolbar__search">
+              <svg class="icon"><use href="#i-search"/></svg>
+              <input class="search__input" id="list-search" type="search">
+            </label>
+            <button class="btn" id="btn-filter"><svg class="icon"><use href="#i-filter"/></svg>Bộ lọc</button>
+          </div>
+          <table class="table" id="personnel-table">
+            <thead>
+              <tr>
+                <th>Mã quân nhân</th><th>Họ và tên</th><th>Cấp bậc</th><th>Chức vụ</th><th>Trạng thái</th>
+                <th class="table__col-actions">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="personnel-tbody"></tbody>
+          </table>
+          <div class="table-footer"><span id="table-range"></span></div>
+        </div>
+
+        <!-- VIEW 2: chi tiết -->
+        <div class="view" id="view-detail" hidden>
+          <a class="back-link" id="btn-back" href="#"><svg class="icon"><use href="#i-back"/></svg>Quay lại danh sách</a>
+
+          <div class="profile-head">
+            <div class="avatar avatar--xl" id="detail-avatar"></div>
+            <div class="profile-head__info">
+              <h2 class="profile-head__name" id="detail-name"></h2>
+              <div class="profile-head__meta" id="detail-meta"></div>
+              <span class="badge" id="detail-status"></span>
+            </div>
+            <div class="profile-head__actions">
+              <button class="btn btn--primary" id="btn-edit"><svg class="icon"><use href="#i-edit"/></svg>Sửa hồ sơ</button>
+              <button class="btn" id="btn-transfer"><svg class="icon"><use href="#i-move"/></svg>Điều động</button>
+              <button class="btn btn--danger" id="btn-archive"><svg class="icon"><use href="#i-archive"/></svg>Lưu trữ</button>
+            </div>
+          </div>
+
+          <div class="tabs" id="detail-tabs" role="tablist"></div>
+          <div class="tab-panel" id="detail-panel" role="tabpanel"></div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
